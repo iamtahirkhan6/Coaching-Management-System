@@ -1,21 +1,42 @@
 <?php
+
+class Session{
+
+    public static function put( $key , $value ){
+        $_SESSION[$key] = $value;
+    }
+
+    public static function get( $key ){
+        return ( isset( $_SESSION[$key] ) ? $_SESSION[$key] : null );
+    }
+
+    public static function forget( $key ){
+        unset( $_SESSION[$key] );
+    }
+
+    public static function isset( $key )
+    {
+      return ( isset( $_SESSION[$key] ) ) ? TRUE : FALSE;
+    }
+}
+
 class Structure
 {
     // This class contains visual elements which can be initialized for easier access
     // and easier sitewide changes
-    public function checkLogin()
+    public static function checkLogin()
     {
-        if (!isset($_SESSION["user_logged_type"])) {
-            $this->redirectHome();
+        if ( Session::isset( 'user_logged_type' ) == FALSE ) {
+            Structure::redirectHome();
         }
     }
 
-    public function header($title)
+    public static function header( $title )
     {
-        $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+        $uri   = rtrim( dirname( $_SERVER['PHP_SELF'] ), '/\\' );
 
         $dot = "";
-        if ($this->endsWith($uri, "admin") || $this->endsWith($uri, "student") || $this->endsWith($uri, "teacher")) {
+        if ( Structure::endsWith( $uri, "admin" ) || Structure::endsWith( $uri, "student" ) || Structure::endsWith( $uri, "teacher" ) ) {
             $dot = "../";
         }
 
@@ -49,38 +70,38 @@ class Structure
           <body class=\"\">";
     }
 
-    public function footer()
+    public static function footer()
     {
         echo "</body>
         </html>";
     }
 
-    public function nakedURL($extra = "")
+    public static function nakedURL( $extra = "" )
     {
         $host  = $_SERVER['HTTP_HOST'];
-        $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+        $uri   = rtrim( dirname( $_SERVER['PHP_SELF'] ), '/\\' );
         return "http://$host$uri/$extra";
     }
 
-    public function redirect($extra = "")
+    public static function redirect( $extra = "" )
     {
         $host  = $_SERVER['HTTP_HOST'];
-        $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-        header("Location: http://$host$uri/$extra");
+        $uri   = rtrim( dirname( $_SERVER['PHP_SELF'] ), '/\\' );
+        header( "Location: http://$host$uri/$extra" );
     }
 
-    public function redirectHome()
+    public static function redirectHome()
     {
         $host  = $_SERVER['HTTP_HOST'];
-        $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+        $uri   = rtrim( dirname( $_SERVER['PHP_SELF'] ), '/\\' );
 
-        header("Location: http://$host".str_replace(array("admin", "student", "teacher"), "", $uri));
+        header( "Location: http://$host".str_replace( array( "admin", "student", "teacher" ), "", $uri ));
     }
 
-    public function currentURL()
+    public static function currentURL()
     {
-        if (isset($_SERVER['HTTPS']) &&
-            $_SERVER['HTTPS'] === 'on') {
+        if ( isset( $_SERVER['HTTPS'] ) &&
+            $_SERVER['HTTPS'] === 'on' ) {
             $link = "https";
         } else {
             $link = "http";
@@ -91,18 +112,18 @@ class Structure
         return $link;
     }
 
-    public function endsWith($string, $endString)
+    public static function endsWith( $string, $endString )
     {
-        $len = strlen($endString);
-        if ($len == 0) {
+        $len = strlen( $endString );
+        if ( $len == 0 ) {
             return true;
         }
-        return (substr($string, -$len) === $endString);
+        return ( substr( $string, -$len ) === $endString );
     }
 
-    public function errorPage($error)
+    public static function errorPage( $error )
     {
-        $this->header("Error - Project");
+        Structure::header( "Error - Project" );
         echo "<main role=\"main\" class=\"container mt-3\">
             <h1 class=\"display-4 text\">Error</h1>
             <hr>
@@ -110,10 +131,10 @@ class Structure
         echo $error;
         echo "</div>
         </main>";
-        $this->footer();
+        Structure::footer();
     }
 
-    public function errorBox($title, $error)
+    public static function errorBox( $title, $error )
     {
         echo "<main role=\"main\" class=\"container mt-3\">
           <h1 class=\"display-4 text\">{$title}</h1>
@@ -122,7 +143,7 @@ class Structure
       </main>";
     }
 
-    public function successBox($title, $message, $link="")
+    public static function successBox( $title, $message, $link="" )
     {
         echo "<main role=\"main\" class=\"container mt-3\">
           <h1 class=\"display-4 text\">{$title}</h1>
@@ -132,9 +153,9 @@ class Structure
       </main>";
     }
 
-    public function topHeading($heading)
+    public static function topHeading( $heading )
     {
-        $home = str_replace(basename($_SERVER['PHP_SELF']), "", $this->currentURL());
+        $home = str_replace( basename( $_SERVER['PHP_SELF'] ), "", Structure::currentURL() );
         echo "<div class=\"row\">
         <div class=\"col col-sm-10\">
           <h1 class=\"\">{$heading}</h1>
@@ -148,8 +169,52 @@ class Structure
       </div>";
     }
 
-    public function is_int_present($int)
+    public static function is_int_present( $int )
     {
-      return (isset($int) && !empty($int) && (is_numeric($int) ? true:false) == true);
+      return ( isset( $int ) && !empty( $int ) && ( is_numeric( $int ) ? true:false ) == true );
+    }
+
+    public static function if_input_exists( $key , $type )
+    {
+      if( $type == "POST" || $type == "post" )
+      {
+        $key = $_POST[$key];
+      } elseif( $type == "GET" || $type == "get" ){
+        $key = $_GET[$key];
+      } else {
+        $key = $_REQUEST[$key];
+      }
+
+      return (isset( $key ) && empty( $key )) ? TRUE : FALSE;
+
+    }
+
+    public static function if_all_inputs_exists( array $keys , $type )
+    {
+      $array = "";
+      if( $type == "POST" || $type == "post")
+      {
+        $array = $_POST;
+      } elseif( $type == "GET" || $type == "get"){
+        $array = $_GET;
+      } else {
+        $array = $_REQUEST;
+      }
+
+      $count = 0;
+      foreach( $keys as $key)
+      {
+        if ( isset( $array[$key] ) || array_key_exists( $key, $array ) )
+        {
+          $count ++;
+        }
+      }
+
+      return count( $keys ) === $count;
+    }
+
+    public static function get_input_var( $key, $input_type)
+    {
+      return filter_input( $input_type, $key, FILTER_DEFAULT);
     }
 }
