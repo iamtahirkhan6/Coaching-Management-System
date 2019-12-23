@@ -7,9 +7,8 @@ require "classes/structure.class.php";
 Session::init();
 
 // Check if any type of user is logged in
-if (Session::isset('user_logged_type') == FALSE) {
-    if (Structure::if_all_inputs_exists( array("user_type", "email", "password"), "POST") == TRUE )
-    {
+if (Session::isset('user_logged_type') == false) {
+    if (Structure::if_all_inputs_exists(array("user_type", "email", "password"), "POST") == true) {
         $activity = new Activity();
         $is_login = $activity->login($_POST["user_type"], $_POST["email"], $_POST["password"]);
         Structure::redirect(Session::get('user_logged_type')."/");

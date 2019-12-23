@@ -18,30 +18,28 @@ $struct->header("Update Teacher - Admin");
 // Main Content Goes Here
 // Check if form submitted
 if (isset($_POST["teacher_id"]) && isset($_POST["teacher_name"]) && isset($_POST["teacher_phone_number"]) && ($_POST["email"]) && isset($_POST["password"])) {
-
     $admin = new Admin();
 
     if (is_bool($admin->update_teacher($_POST)) === true) {
-      // On success
-      $struct->successBox("Update Teacher","Successfully updated teacher!", $struct->nakedURL("view_teachers.php"));
+        // On success
+        $struct->successBox("Update Teacher", "Successfully updated teacher!", $struct->nakedURL("view_teachers.php"));
     } else {
-      // On failure
-      $struct->errorBox("Update Teacher","Unable to update teacher!");
+        // On failure
+        $struct->errorBox("Update Teacher", "Unable to update teacher!");
     }
 
     //$admin->close_DB();
-} elseif(isset($_GET["teacher_id"]) && !empty($_GET["teacher_id"])) {
-  $admin    = new Admin();
-  $teacher  = $admin->view_teacher($_GET["teacher_id"], true);
+} elseif (isset($_GET["teacher_id"]) && !empty($_GET["teacher_id"])) {
+    $admin    = new Admin();
+    $teacher  = $admin->view_teacher($_GET["teacher_id"], true);
 
-  if(!isset($teacher["teacher_id"]))
-  {
-    $struct->errorBox("Update Teacher","Select a valid teacher!");
-  } else {
-    // Form to fill details
-    echo "<main role=\"main\" class=\"container mt-3  mx-auto\">";
-    echo $struct->topHeading("Update Teacher");
-    echo "    <hr>
+    if (!isset($teacher["teacher_id"])) {
+        $struct->errorBox("Update Teacher", "Select a valid teacher!");
+    } else {
+        // Form to fill details
+        echo "<main role=\"main\" class=\"container mt-3  mx-auto\">";
+        echo $struct->topHeading("Update Teacher");
+        echo "    <hr>
           <form method=\"POST\">
             <input type=\"hidden\" name=\"teacher_id\" value=\"".$teacher["teacher_id"]."\">
             <div class=\"form-group\">
@@ -69,11 +67,11 @@ if (isset($_POST["teacher_id"]) && isset($_POST["teacher_name"]) && isset($_POST
             </div>
           </form>
       </main>";
-  }
+    }
 
-  $admin->close_DB();
+    $admin->close_DB();
 } else {
-  $struct->errorBox("Update Teacher","No teacher selected!");
+    $struct->errorBox("Update Teacher", "No teacher selected!");
 }
 // Display Footer
 $struct->footer();

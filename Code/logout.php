@@ -9,4 +9,3 @@ Session::session_destroy();
 
 
 Structure::checkLogin();
-?>

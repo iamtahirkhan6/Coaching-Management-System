@@ -21,18 +21,18 @@ if (isset($_POST["student_name"]) && isset($_POST["student_phone_number"]) && ($
     $admin = new Admin();
     if (is_bool($admin->create_student($_POST)) === true) {
         // On success
-        $struct->successBox("Add Student","Successfully added student!", $struct->nakedURL("view_students.php"));
+        $struct->successBox("Add Student", "Successfully added student!", $struct->nakedURL("view_students.php"));
     } else {
-      // On failure
-      $struct->errorBox("Add Student","Unable to add a student!");
+        // On failure
+        $struct->errorBox("Add Student", "Unable to add a student!");
     }
     $admin->close_DB();
 } else {
 
   // Form to fill details
-echo "<main role=\"main\" class=\"container mx-auto mt-3\">";
-echo $struct->topHeading("Add Student");
-echo "    <hr>
+    echo "<main role=\"main\" class=\"container mx-auto mt-3\">";
+    echo $struct->topHeading("Add Student");
+    echo "    <hr>
           <form method=\"POST\">
             <div class=\"form-group\">
               <label for=\"name\">Name</label>

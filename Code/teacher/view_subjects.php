@@ -35,8 +35,8 @@ echo "<hr>
 
 $counter = 0;
 foreach ($subjects as $subject) {
-  $counter++;
-echo  "<tr>
+    $counter++;
+    echo  "<tr>
         <th scope=\"row\">{$counter}</th>
         <td>{$subject['subject_name']}</td>
         <td>

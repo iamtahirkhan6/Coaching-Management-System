@@ -176,5 +176,3 @@ class Activity extends Config
         return $response;
     }
 }
-
-?>

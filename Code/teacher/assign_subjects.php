@@ -17,18 +17,16 @@ $struct->header("Assign Teacher To Students - Admin");
 
 if (isset($_POST["students"])) {
     if ($_POST["students"][0] == "EMPTY") {
-      if(count($_POST["students"]) > 0)
-      {
-        $teacher = new Teacher();
-        $teacher->assign_teacher($_POST["students"], $_GET["subject_id"]);
-        unset($teacher);
-        $struct->successBox("Assign Students", "Succesfully assigned the following student(s) to {$_GET["subject_name"]}!<br>", "view_subjects.php");
-      } else {
-        $struct->errorBox("Assign Students", "No students available!");
-      }
-
+        if (count($_POST["students"]) > 0) {
+            $teacher = new Teacher();
+            $teacher->assign_teacher($_POST["students"], $_GET["subject_id"]);
+            unset($teacher);
+            $struct->successBox("Assign Students", "Succesfully assigned the following student(s) to {$_GET["subject_name"]}!<br>", "view_subjects.php");
+        } else {
+            $struct->errorBox("Assign Students", "No students available!");
+        }
     } else {
-      $struct->errorBox("Assign Students", "No students available!");
+        $struct->errorBox("Assign Students", "No students available!");
     }
 } elseif ($struct->is_int_present($_GET["subject_id"]) == true) {
     $teacher = new Teacher();
@@ -55,8 +53,10 @@ if (isset($_POST["students"])) {
                 </thead>
                 <tbody>";
             foreach ($students as $student) {
-              $checked = "";
-              if($student["assigned"] == "true") $checked = "checked";
+                $checked = "";
+                if ($student["assigned"] == "true") {
+                    $checked = "checked";
+                }
                 echo "
                   <tr>
                     <td>

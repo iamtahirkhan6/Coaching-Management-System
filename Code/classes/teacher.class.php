@@ -140,22 +140,21 @@ class Teacher extends Config
     // Function to assign teacher to multiple students
     public function assign_teacher($students, $subject_id)
     {
-      // check if items to insert exists in the input array or note
-      if (isset($students)) {
-          $delete = $this->db->query("DELETE FROM assigned WHERE teacher_id = ? AND subject_id = ?", $_SESSION["id"], $subject_id);
-          $delete = $delete->affectedRows();
+        // check if items to insert exists in the input array or note
+        if (isset($students)) {
+            $delete = $this->db->query("DELETE FROM assigned WHERE teacher_id = ? AND subject_id = ?", $_SESSION["id"], $subject_id);
+            $delete = $delete->affectedRows();
 
-          if(count($students) > 0)
-          {
-            foreach ($students as $key => $student_id) {
-              $update = $this->db->query("INSERT INTO assigned (`student_id`, `subject_id`, `teacher_id`) VALUES (?,?,?)", $student_id, $subject_id, $_SESSION["id"]);
-              $update = $update->affectedRows();
+            if (count($students) > 0) {
+                foreach ($students as $key => $student_id) {
+                    $update = $this->db->query("INSERT INTO assigned (`student_id`, `subject_id`, `teacher_id`) VALUES (?,?,?)", $student_id, $subject_id, $_SESSION["id"]);
+                    $update = $update->affectedRows();
+                }
             }
-          }
-          return true;
-      }
+            return true;
+        }
 
-      return false;
+        return false;
     }
 
     // Other DB functions

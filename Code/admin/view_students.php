@@ -38,13 +38,15 @@ echo "    <hr>
 
 $counter = 0;
 foreach ($students as $student) {
-  $counter++;
-  if ($student["subjects"] == "") {
-      $student["subjects"] = "<span class=\"text-danger\">None</span>";
-  }
-  if($student['teacher_name'] == "") $student['teacher_name'] = "<span class=\"text-danger\">None</span>";
+    $counter++;
+    if ($student["subjects"] == "") {
+        $student["subjects"] = "<span class=\"text-danger\">None</span>";
+    }
+    if ($student['teacher_name'] == "") {
+        $student['teacher_name'] = "<span class=\"text-danger\">None</span>";
+    }
 
-echo  "<tr>
+    echo  "<tr>
         <th scope=\"row\">{$counter}</th>
         <td>{$student['student_name']}</td>
         <td>{$student['email']}</td>

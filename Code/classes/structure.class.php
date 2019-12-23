@@ -1,38 +1,40 @@
 <?php
 
-class Session{
-
+class Session
+{
     public static function init()
     {
-      session_start();
+        session_start();
     }
 
-    public static function put( $key , $value ){
-        $_SESSION[$key] = filter_var($value);
-
-    }
-
-    public static function get( $key ){
-        return ( isset( $_SESSION[$key] ) ? filter_var($_SESSION[$key]) : null );
-    }
-
-    public static function forget( $key ){
-        unset( $_SESSION[$key] );
-    }
-
-    public static function isset( $key )
+    public static function put($key, $value)
     {
-      return ( isset( $_SESSION[$key] ) ) ? TRUE : FALSE;
+        $_SESSION[$key] = filter_var($value);
+    }
+
+    public static function get($key)
+    {
+        return (isset($_SESSION[$key]) ? filter_var($_SESSION[$key]) : null);
+    }
+
+    public static function forget($key)
+    {
+        unset($_SESSION[$key]);
+    }
+
+    public static function isset($key)
+    {
+        return (isset($_SESSION[$key])) ? true : false;
     }
 
     public static function unset()
     {
-      session_unset();
+        session_unset();
     }
 
     public static function destroy()
     {
-      session_destroy();
+        session_destroy();
     }
 }
 
@@ -42,21 +44,21 @@ class Structure
     // and easier sitewide changes
     public static function checkLogin()
     {
-        if ( Session::isset( 'user_logged_type' ) == FALSE ) {
+        if (Session::isset('user_logged_type') == false) {
             Structure::redirectHome();
         }
     }
 
-    public static function header( $title )
+    public static function header($title)
     {
-        $uri   = rtrim( dirname( filter_input(INPUT_SERVER, "PHP_SELF"), FILTER_SANITIZE_URL ) ), '/\\' );
+        $uri   = rtrim(dirname(filter_input(INPUT_SERVER, "PHP_SELF", FILTER_SANITIZE_URL)), '/\\');
 
         $dot = "";
-        if ( Structure::endsWith( $uri, "admin" ) || Structure::endsWith( $uri, "student" ) || Structure::endsWith( $uri, "teacher" ) ) {
+        if (Structure::endsWith($uri, "admin") || Structure::endsWith($uri, "student") || Structure::endsWith($uri, "teacher")) {
             $dot = "../";
         }
 
-        print_r('"<!DOCTYPE html lang="en">
+        print('<!DOCTYPE html lang="en">
           <head>
           <title>'.$title.'</title>
 
@@ -83,64 +85,63 @@ class Structure
           <!-- Custom styles for this template -->
           <link href="src/css/signin.css" rel="stylesheet">
           </head>
-          <body>"');
+          <body>');
     }
 
     public static function footer()
     {
-        echo "</body>
-        </html>";
+        print('</body></html>');
     }
 
-    public static function nakedURL( $extra = "" )
+    public static function nakedURL($extra = "")
     {
         $host  = $_SERVER['HTTP_HOST'];
-        $uri   = rtrim( dirname( filter_input(INPUT_SERVER, "PHP_SELF"), FILTER_SANITIZE_URL ) ), '/\\' );
+        $uri   = rtrim(dirname(filter_input(INPUT_SERVER, "PHP_SELF", FILTER_SANITIZE_URL)), '/\\');
         return "http://$host$uri/$extra";
     }
 
-    public static function redirect( $extra = "" )
+    public static function redirect($extra = "")
     {
         $host  = $_SERVER['HTTP_HOST'];
-        $uri   = rtrim( dirname( filter_input(INPUT_SERVER, "PHP_SELF"), FILTER_SANITIZE_URL ) ), '/\\' );
-        header( "Location: http://$host$uri/$extra" );
+        $uri   = rtrim(dirname(filter_input(INPUT_SERVER, "PHP_SELF", FILTER_SANITIZE_URL)), '/\\');
+        header("Location: http://$host$uri/$extra");
     }
 
     public static function redirectHome()
     {
         $host  = $_SERVER['HTTP_HOST'];
-        $uri   = rtrim( dirname( filter_input(INPUT_SERVER, "PHP_SELF"), FILTER_SANITIZE_URL ) ), '/\\' );
+        $uri   = rtrim(dirname(filter_input(INPUT_SERVER, "PHP_SELF", FILTER_SANITIZE_URL)), '/\\');
 
-        header( "Location: http://$host".str_replace( array( "admin", "student", "teacher" ), "", $uri ));
+        header("Location: http://$host".str_replace(array( "admin", "student", "teacher" ), "", $uri));
     }
 
     public static function currentURL()
     {
-        if ( isset( $_SERVER['HTTPS'] ) &&
-            $_SERVER['HTTPS'] === 'on' ) {
+        if (isset($_SERVER['HTTPS']) &&
+            $_SERVER['HTTPS'] === 'on') {
             $link = "https";
         } else {
             $link = "http";
         }
         $link .= "://";
-        $link .= filter_input(INPUT_SERVER, "HTTP_HOST"), FILTER_SANITIZE_URL );
-        $link .= filter_input(INPUT_SERVER, "PHP_SELF"), FILTER_SANITIZE_URL );
+        $link .= filter_input(INPUT_SERVER, "HTTP_HOST", FILTER_SANITIZE_URL);
+        $link .= filter_input(INPUT_SERVER, "PHP_SELF", FILTER_SANITIZE_URL);
         return $link;
     }
 
-    public static function endsWith( $string, $endString )
+    public static function endsWith($string, $endString)
     {
-        $len = strlen( $endString );
-        if ( $len == 0 ) {
+        $len = strlen($endString);
+        if ($len == 0) {
             return true;
         }
-        return ( substr( $string, -$len ) === $endString );
+        return (substr($string, -$len) === $endString);
     }
 
-    public static function errorPage( $error )
+    public static function errorPage($error)
     {
-        Structure::header( "Error - Project" );
-        print_r('<main role="main" class="container mt-3">
+        Structure::header("Error - Project");
+        print('<main role="main" class="container mt-3">
             <h1 class="display-4 text">Error</h1>
             <hr>
             <div class="alert alert-danger" role="alert">'.$error.'</div>
@@ -148,18 +149,18 @@ class Structure
         Structure::footer();
     }
 
-    public static function errorBox( $title, $error )
+    public static function errorBox($title, $error)
     {
-        print_r('<main role="main" class="container mt-3">
+        print('<main role="main" class="container mt-3">
           <h1 class="display-4 text">'.$title.'</h1>
           <hr>
           <div class="alert alert-danger" role="alert">'.$error.'</div>
         </main>');
     }
 
-    public static function successBox( $title, $message, $link="" )
+    public static function successBox($title, $message, $link="")
     {
-        print_r('<main role="main" class="container mt-3">
+        print('<main role="main" class="container mt-3">
           <h1 class="display-4 text">'.$title.'</h1>
           <hr>
           <div class="alert alert-success" role="alert">'.$message.'</div>
@@ -167,66 +168,61 @@ class Structure
         </main>');
     }
 
-    public static function topHeading( $heading )
+    public static function topHeading($heading)
     {
-        $home = str_replace( basename( filter_input(INPUT_SERVER, "PHP_SELF"), FILTER_SANITIZE_URL ), "", Structure::currentURL() );
-        echo "<div class=\"row\">
-        <div class=\"col col-sm-10\">
-          <h1 class=\"\">{$heading}</h1>
+        $home = str_replace(basename(filter_input(INPUT_SERVER, "PHP_SELF", FILTER_SANITIZE_URL), "", Structure::currentURL()));
+        print('<div class="row">
+        <div class="col col-sm-10">
+          <h1 class="">'.$heading.'</h1>
         </div>
-        <div class=\"col col-sm-1 pt-3\">
-          <a href=\"{$home}\" class=\"text-primary\"><h6>Home</h6></a>
+        <div class="col col-sm-1 pt-3">
+          <a href="'.$home.'" class="text-primary"><h6>Home</h6></a>
         </div>
-        <div class=\"col col-sm-1 pt-3\">
-          <a href=\"../logout.php\" class=\"text-danger\"><h6>Logout</h6></a>
+        <div class="col col-sm-1 pt-3">
+          <a href="../logout.php" class="text-danger"><h6>Logout</h6></a>
         </div>
-      </div>";
+        </div>');
     }
 
-    public static function is_int_present( $int )
+    public static function is_int_present($int)
     {
-      return ( isset( $int ) && !empty( $int ) && ( is_numeric( $int ) ? true:false ) == true );
+        return (isset($int) && !empty($int) && (is_numeric($int) ? true:false) == true);
     }
 
-    public static function if_input_exists( $key , $type )
+    public static function if_input_exists($key, $type)
     {
-      if( $type == "POST" || $type == "post" )
-      {
-        $key = filter_input(INPUT_POST, $key, FILTER_DEFAULT);
-      } else( $type == "GET" || $type == "get" ){
-        $key = filter_input(INPUT_GET, $key, FILTER_DEFAULT);
-      }
-
-      return (isset( $key ) && empty( $key )) ? TRUE : FALSE;
-
-    }
-
-    public static function if_all_inputs_exists( array $keys , $type )
-    {
-      $array = "";
-      if( $type == "POST" || $type == "post")
-      {
-        $array = $_POST;
-      } elseif( $type == "GET" || $type == "get"){
-        $array = $_GET;
-      } else {
-        $array = $_REQUEST;
-      }
-
-      $count = 0;
-      foreach( $keys as $key)
-      {
-        if ( isset( $array[$key] ) || array_key_exists( $key, $array ) )
-        {
-          $count ++;
+        if ($type == "POST") {
+            $key = filter_input(INPUT_POST, $key, FILTER_DEFAULT);
+        } else {
+            $key = filter_input(INPUT_GET, $key, FILTER_DEFAULT);
         }
-      }
 
-      return count( $keys ) === $count;
+        return (isset($key) && empty($key)) ? true : false;
     }
 
-    public static function get_input_var( $key, $input_type)
+    public static function if_all_inputs_exists(array $keys, $type)
     {
-      return filter_input( $input_type, $key, FILTER_DEFAULT);
+        $array = "";
+        if ($type == "POST" || $type == "post") {
+            $array = $_POST;
+        } elseif ($type == "GET" || $type == "get") {
+            $array = $_GET;
+        } else {
+            $array = $_REQUEST;
+        }
+
+        $count = 0;
+        foreach ($keys as $key) {
+            if (isset($array[$key]) || array_key_exists($key, $array)) {
+                $count ++;
+            }
+        }
+
+        return count($keys) === $count;
+    }
+
+    public static function get_input_var($key, $input_type)
+    {
+        return filter_input($input_type, $key, FILTER_DEFAULT);
     }
 }
