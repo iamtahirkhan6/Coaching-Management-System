@@ -58,7 +58,7 @@ class Structure
             $dot = "../";
         }
 
-        print('<!DOCTYPE html lang="en">
+        echo('<!DOCTYPE html lang="en">
           <head>
           <title>'.$title.'</title>
 
@@ -90,7 +90,7 @@ class Structure
 
     public static function footer()
     {
-        print('</body></html>');
+        echo('</body></html>');
     }
 
     public static function nakedURL($extra = "")
@@ -141,7 +141,7 @@ class Structure
     public static function errorPage($error)
     {
         Structure::header("Error - Project");
-        print('<main role="main" class="container mt-3">
+        echo('<main role="main" class="container mt-3">
             <h1 class="display-4 text">Error</h1>
             <hr>
             <div class="alert alert-danger" role="alert">'.$error.'</div>
@@ -151,7 +151,7 @@ class Structure
 
     public static function errorBox($title, $error)
     {
-        print('<main role="main" class="container mt-3">
+        echo('<main role="main" class="container mt-3">
           <h1 class="display-4 text">'.$title.'</h1>
           <hr>
           <div class="alert alert-danger" role="alert">'.$error.'</div>
@@ -160,7 +160,7 @@ class Structure
 
     public static function successBox($title, $message, $link="")
     {
-        print('<main role="main" class="container mt-3">
+        echo('<main role="main" class="container mt-3">
           <h1 class="display-4 text">'.$title.'</h1>
           <hr>
           <div class="alert alert-success" role="alert">'.$message.'</div>
@@ -171,7 +171,7 @@ class Structure
     public static function topHeading($heading)
     {
         $home = str_replace(basename(filter_input(INPUT_SERVER, "PHP_SELF", FILTER_SANITIZE_URL)), "", Structure::currentURL());
-        print('<div class="row">
+        echo('<div class="row">
         <div class="col col-sm-10">
           <h1 class="">'.$heading.'</h1>
         </div>
