@@ -10,7 +10,7 @@ Session::init();
 if (Session::isset('user_logged_type') == false) {
     if (Structure::if_all_inputs_exists(array("user_type", "email", "password"), "POST") == true) {
         $activity = new Activity();
-        $is_login = $activity->login($_POST["user_type"], $_POST["email"], $_POST["password"]);
+        $is_login = $activity->login(filter_input(INPUT_POST, "user_type", FILTER_DEFAULT), filter_input(INPUT_POST, "email", FILTER_DEFAULT), filter_input(INPUT_POST, "password", FILTER_DEFAULT));
         Structure::redirect(Session::get('user_logged_type')."/");
     } else {
         Structure::header("Login");

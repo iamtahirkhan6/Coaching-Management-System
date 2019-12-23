@@ -21,19 +21,19 @@ class Admin extends Config
     }
 
     // View all student
-    public function view_student($id, $single = false)
+    public function view_student($student_id, $single = false)
     {
         $success = false; // variable to return if insertion success or failed
 
         // check if items to insert exists in the input array or note
-        if ($single == true && $id != 0) {
-            $insert = $this->db->query("SELECT student.student_id, student.student_name, student.student_phone_number, student.email, student.password FROM student WHERE student.student_id = ?", $id);
+        if ($single == true && $student_id != 0) {
+            $insert = $this->db->query("SELECT student.student_id, student.student_name, student.student_phone_number, student.email, student.password FROM student WHERE student.student_id = ?", $student_id);
         } else {
             $insert = $this->db->query("SELECT DISTINCT level2.student_id, level2.student_name, level2.student_phone_number, level2.email, level2.teacher_name, GROUP_CONCAT(DISTINCT(subject.subject_name) SEPARATOR '<br>') AS subjects FROM (SELECT DISTINCT level.student_id, level.student_name, level.student_phone_number, level.email, level.teacher_name, assigned.subject_id FROM (SELECT DISTINCT student.student_id, student.student_name, student.student_phone_number, student.email, student.teacher_id, teacher.teacher_name FROM student LEFT OUTER JOIN teacher ON student.teacher_id = teacher.teacher_id) level NATURAL LEFT JOIN assigned) level2 NATURAL LEFT JOIN subject GROUP BY level2.student_id ORDER BY level2.student_id ASC");
         }
 
         if ($insert->numRows() > 0) {
-            if ($single == true && $id != 0) {
+            if ($single == true && $student_id != 0) {
                 $success = $insert->fetchArray();
             } else {
                 $success = $insert->fetchAll();
@@ -124,20 +124,20 @@ class Admin extends Config
     }
 
     // View teachers
-    public function view_teacher($id, $single = false)
+    public function view_teacher($teacher_id, $single = false)
     {
         $success = false; // variable to return if insertion success or failed
 
         // check if items to insert exists in the input array or note
-        if ($single == true && $id != 0) {
-            $view = $this->db->query("SELECT teacher.teacher_id, teacher.teacher_name, teacher.teacher_phone_number, teacher.email, teacher.password FROM teacher WHERE teacher.teacher_id = ?", $id);
+        if ($single == true && $teacher_id != 0) {
+            $view = $this->db->query("SELECT teacher.teacher_id, teacher.teacher_name, teacher.teacher_phone_number, teacher.email, teacher.password FROM teacher WHERE teacher.teacher_id = ?", $teacher_id);
         } else {
             /* if no specific teacher given */
             $view = $this->db->query("SELECT level1.*, GROUP_CONCAT(DISTINCT student.student_name SEPARATOR '<br>') AS students FROM (SELECT DISTINCT teacher.teacher_id, teacher.teacher_phone_number, teacher.teacher_name, teacher.email, GROUP_CONCAT(DISTINCT subject.subject_name SEPARATOR ', ') AS subjects FROM teacher LEFT OUTER JOIN subject ON teacher.teacher_id = subject.teacher_id GROUP BY teacher.teacher_id) level1 LEFT OUTER JOIN student ON level1.teacher_id = student.teacher_id GROUP BY level1.teacher_id");
         }
 
         if ($view->numRows() > 0) {
-            if ($single == true && $id != 0) {
+            if ($single == true && $teacher_id != 0) {
                 $success = $view->fetchArray();
             } else {
                 $success = $view->fetchAll();
