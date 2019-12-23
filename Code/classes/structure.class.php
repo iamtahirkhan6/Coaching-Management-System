@@ -170,7 +170,7 @@ class Structure
 
     public static function topHeading($heading)
     {
-        $home = str_replace(basename(filter_input(INPUT_SERVER, "PHP_SELF", FILTER_SANITIZE_URL), "", Structure::currentURL()));
+        $home = str_replace(basename(filter_input(INPUT_SERVER, "PHP_SELF", FILTER_SANITIZE_URL)), "", Structure::currentURL());
         print('<div class="row">
         <div class="col col-sm-10">
           <h1 class="">'.$heading.'</h1>
