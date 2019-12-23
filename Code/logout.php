@@ -1,12 +1,12 @@
 <?php
-session_start() ;
+Session::init();
+
 // Import main class
-require_once "classes/structure.class.php";
+require "classes/structure.class.php";
 
-session_unset();
-session_destroy();
+Session::session_unset();
+Session::session_destroy();
 
 
-$struct = new Structure();
-$struct->checkLogin();
+Structure::checkLogin();
 ?>

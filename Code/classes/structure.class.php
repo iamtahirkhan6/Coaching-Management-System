@@ -2,12 +2,18 @@
 
 class Session{
 
+    public static function init()
+    {
+      session_start();
+    }
+
     public static function put( $key , $value ){
-        $_SESSION[$key] = $value;
+        $_SESSION[$key] = filter_var($value);
+
     }
 
     public static function get( $key ){
-        return ( isset( $_SESSION[$key] ) ? $_SESSION[$key] : null );
+        return ( isset( $_SESSION[$key] ) ? filter_var($_SESSION[$key]) : null );
     }
 
     public static function forget( $key ){
@@ -17,6 +23,16 @@ class Session{
     public static function isset( $key )
     {
       return ( isset( $_SESSION[$key] ) ) ? TRUE : FALSE;
+    }
+
+    public static function unset()
+    {
+      session_unset();
+    }
+
+    public static function destroy()
+    {
+      session_destroy();
     }
 }
 
@@ -33,20 +49,20 @@ class Structure
 
     public static function header( $title )
     {
-        $uri   = rtrim( dirname( $_SERVER['PHP_SELF'] ), '/\\' );
+        $uri   = rtrim( dirname( filter_input(INPUT_SERVER, "PHP_SELF"), FILTER_SANITIZE_URL ) ), '/\\' );
 
         $dot = "";
         if ( Structure::endsWith( $uri, "admin" ) || Structure::endsWith( $uri, "student" ) || Structure::endsWith( $uri, "teacher" ) ) {
             $dot = "../";
         }
 
-        echo "<html lang=\"en\">
+        print_r('"<!DOCTYPE html lang="en">
           <head>
-          <title>".$title."</title>
+          <title>'.$title.'</title>
 
           <!-- Bootstrap core CSS -->
-          <link href=\"{$dot}src/css/bootstrap.min.css\" rel=\"stylesheet\">
-          <meta name=\"theme-color\" content=\"#563d7c\">
+          <link href="'.$dot.'src/css/bootstrap.min.css" rel="stylesheet">
+          <meta name="theme-color" content="#563d7c">
 
           <style>
           .bd-placeholder-img {
@@ -65,9 +81,9 @@ class Structure
           }
           </style>
           <!-- Custom styles for this template -->
-          <link href=\"src/css/signin.css\" rel=\"stylesheet\">
+          <link href="src/css/signin.css" rel="stylesheet">
           </head>
-          <body class=\"\">";
+          <body>"');
     }
 
     public static function footer()
@@ -79,21 +95,21 @@ class Structure
     public static function nakedURL( $extra = "" )
     {
         $host  = $_SERVER['HTTP_HOST'];
-        $uri   = rtrim( dirname( $_SERVER['PHP_SELF'] ), '/\\' );
+        $uri   = rtrim( dirname( filter_input(INPUT_SERVER, "PHP_SELF"), FILTER_SANITIZE_URL ) ), '/\\' );
         return "http://$host$uri/$extra";
     }
 
     public static function redirect( $extra = "" )
     {
         $host  = $_SERVER['HTTP_HOST'];
-        $uri   = rtrim( dirname( $_SERVER['PHP_SELF'] ), '/\\' );
+        $uri   = rtrim( dirname( filter_input(INPUT_SERVER, "PHP_SELF"), FILTER_SANITIZE_URL ) ), '/\\' );
         header( "Location: http://$host$uri/$extra" );
     }
 
     public static function redirectHome()
     {
         $host  = $_SERVER['HTTP_HOST'];
-        $uri   = rtrim( dirname( $_SERVER['PHP_SELF'] ), '/\\' );
+        $uri   = rtrim( dirname( filter_input(INPUT_SERVER, "PHP_SELF"), FILTER_SANITIZE_URL ) ), '/\\' );
 
         header( "Location: http://$host".str_replace( array( "admin", "student", "teacher" ), "", $uri ));
     }
@@ -107,8 +123,8 @@ class Structure
             $link = "http";
         }
         $link .= "://";
-        $link .= $_SERVER['HTTP_HOST'];
-        $link .= $_SERVER['PHP_SELF'];
+        $link .= filter_input(INPUT_SERVER, "HTTP_HOST"), FILTER_SANITIZE_URL );
+        $link .= filter_input(INPUT_SERVER, "PHP_SELF"), FILTER_SANITIZE_URL );
         return $link;
     }
 
@@ -124,38 +140,36 @@ class Structure
     public static function errorPage( $error )
     {
         Structure::header( "Error - Project" );
-        echo "<main role=\"main\" class=\"container mt-3\">
-            <h1 class=\"display-4 text\">Error</h1>
+        print_r('<main role="main" class="container mt-3">
+            <h1 class="display-4 text">Error</h1>
             <hr>
-            <div class=\"alert alert-danger\" role=\"alert\">";
-        echo $error;
-        echo "</div>
-        </main>";
+            <div class="alert alert-danger" role="alert">'.$error.'</div>
+            </main>');
         Structure::footer();
     }
 
     public static function errorBox( $title, $error )
     {
-        echo "<main role=\"main\" class=\"container mt-3\">
-          <h1 class=\"display-4 text\">{$title}</h1>
+        print_r('<main role="main" class="container mt-3">
+          <h1 class="display-4 text">'.$title.'</h1>
           <hr>
-          <div class=\"alert alert-danger\" role=\"alert\">{$error}</div>
-      </main>";
+          <div class="alert alert-danger" role="alert">'.$error.'</div>
+        </main>');
     }
 
     public static function successBox( $title, $message, $link="" )
     {
-        echo "<main role=\"main\" class=\"container mt-3\">
-          <h1 class=\"display-4 text\">{$title}</h1>
+        print_r('<main role="main" class="container mt-3">
+          <h1 class="display-4 text">'.$title.'</h1>
           <hr>
-          <div class=\"alert alert-success\" role=\"alert\">{$message}</div>
-          <a class=\"btn btn-primary btn-small\" href=\"{$link}\" role=\"button\">Go back!</a>
-      </main>";
+          <div class="alert alert-success" role="alert">'.$message.'</div>
+          <a class="btn btn-primary btn-small" href="'.$link.'" role="button">Go back!</a>
+        </main>');
     }
 
     public static function topHeading( $heading )
     {
-        $home = str_replace( basename( $_SERVER['PHP_SELF'] ), "", Structure::currentURL() );
+        $home = str_replace( basename( filter_input(INPUT_SERVER, "PHP_SELF"), FILTER_SANITIZE_URL ), "", Structure::currentURL() );
         echo "<div class=\"row\">
         <div class=\"col col-sm-10\">
           <h1 class=\"\">{$heading}</h1>
@@ -178,11 +192,9 @@ class Structure
     {
       if( $type == "POST" || $type == "post" )
       {
-        $key = $_POST[$key];
-      } elseif( $type == "GET" || $type == "get" ){
-        $key = $_GET[$key];
-      } else {
-        $key = $_REQUEST[$key];
+        $key = filter_input(INPUT_POST, $key, FILTER_DEFAULT);
+      } else( $type == "GET" || $type == "get" ){
+        $key = filter_input(INPUT_GET, $key, FILTER_DEFAULT);
       }
 
       return (isset( $key ) && empty( $key )) ? TRUE : FALSE;

@@ -1,10 +1,10 @@
 <?php
-// Start session
-session_start();
-
 // Import main class
 require "classes/admin.class.php";
 require "classes/structure.class.php";
+
+// Start session
+Session::init();
 
 // Check if any type of user is logged in
 if (Session::isset('user_logged_type') == FALSE) {
