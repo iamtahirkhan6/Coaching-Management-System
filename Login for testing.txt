@@ -1,0 +1,14 @@
+Admin Panel - 
+
+Email: admin@gmail.com
+Password: 123x123x
+
+Teacher Panel -
+
+Email: rajesh_sen@gmail.com
+Password: 013254870
+
+Student Panel -
+
+Email: tahir_khan@gmail.com
+Password: 0123456789

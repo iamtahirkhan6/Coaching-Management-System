@@ -1,0 +1,4 @@
+Developed on Xampp Local Server v3.2.3
+Apache/2.4.39 (Win64) OpenSSL/1.1.1b PHP/7.3.4
+Database client version: libmysql - mysqlnd 5.0.12-dev
+PHP version:: 7.3.4
