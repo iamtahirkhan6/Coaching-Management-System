@@ -16,7 +16,12 @@ Structure::header("Add Teacher - Admin");
 // Check if form submitted
 if (Structure::if_all_inputs_exists(array("teacher_name", "teacher_phone_number", "email", "password"), "POST") == true) {
     $admin = new Admin();
-    if (is_bool($admin->create_teacher($_POST)) === true) {
+    if (is_bool($admin->create_teacher(
+        filter_input(INPUT_POST, "teacher_name", FILTER_DEFAULT),
+        filter_input(INPUT_POST, "teacher_phone_number", FILTER_DEFAULT),
+        filter_input(INPUT_POST, "email", FILTER_DEFAULT),
+        filter_input(INPUT_POST, "password", FILTER_DEFAULT)
+    )) === true) {
         // On success
         Structure::successBox("Add teacher", "Successfully added teacher!", $struct->nakedURL("view_teachers.php"));
     } else {

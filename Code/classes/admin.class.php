@@ -45,11 +45,11 @@ class Admin extends Config
     }
 
     // UPDATE student
-    public function update_student(array $input)
+    public function update_student($student_id, $student_name, $student_phone_number, $email, $password)
     {
         // check if items to insert exists in the input array or note
-        if (isset($input["student_id"]) && isset($input["student_name"]) && isset($input["student_phone_number"]) && isset($input["email"]) && isset($input["password"])) {
-            $update = $this->db->query("UPDATE `student` SET `student_name`= ? , `student_phone_number`= ? , `email` = ? , `password` = ? WHERE `student_id` = ? ", $input["student_name"], $input["student_phone_number"], $input["email"], $input["password"], $input["student_id"]);
+        if (isset($student_id) && isset($student_name) && isset($student_phone_number) && isset($email) && isset($password)) {
+            $update = $this->db->query("UPDATE `student` SET `student_name`= ? , `student_phone_number`= ? , `email` = ? , `password` = ? WHERE `student_id` = ? ", $student_name, $student_phone_number, $email, $password, $student_id);
 
             // if more than 1 row returned then it insertion was successfull
             return ($update->affectedRows() > 0);
@@ -106,13 +106,13 @@ class Admin extends Config
 
     //////////////// TEACHER CRUD (creat, read, update, delete) ///////////////
     // CREATE a new teacher
-    public function create_teacher($input)
+    public function create_teacher($teacher_name, $teacher_phone_number, $email, $password)
     {
         $success = false; // variable to return if insertion success or failed
 
         // check if items to insert exists in the input array or note
-        if (isset($input["teacher_name"]) && isset($input["teacher_phone_number"]) && isset($input["email"]) && isset($input["password"]) && strlen($input["password"]) > 5) {
-            $insert = $this->db->query("INSERT INTO `teacher`(`teacher_name`, `teacher_phone_number`, `email`, `password`) VALUES (?, ?, ?, ?)", $input["teacher_name"], $input["teacher_phone_number"], $input["email"], $input["password"]);
+        if (isset($teacher_name) && isset($teacher_phone_number) && isset($email) && isset($password) && strlen($password) > 5) {
+            $insert = $this->db->query("INSERT INTO `teacher`(`teacher_name`, `teacher_phone_number`, `email`, `password`) VALUES (?, ?, ?, ?)", $teacher_name, $teacher_phone_number, $email, $password);
 
             // if more than 1 row returned then it insertion was successfull
             if ($insert->numRows() > 0) {
