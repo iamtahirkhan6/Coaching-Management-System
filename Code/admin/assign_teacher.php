@@ -19,7 +19,7 @@ if (Structure::if_all_inputs_exists(array("teacher_id"), "POST") == true) {
             $admin->assign_teacher(filter_input(INPUT_POST, "teacher_id", FILTER_DEFAULT), $student_id);
             unset($admin);
         }
-        Structure::successBox("Assign Students", "Succesfully assigned the following student(s) to {$_GET["teacher_name"]}!<br>");
+        Structure::successBox("Assign Students", "Succesfully assigned the following student(s) to ".filter_input(INPUT_GET, "teacher_name", FILTER_DEFAULT)."!<br>");
     }
 } elseif (Structure::is_int_present(filter_input(INPUT_GET, "teacher_id", FILTER_DEFAULT)) == true) {
     $teacher = new Admin();
