@@ -48,10 +48,10 @@ if (Structure::if_all_inputs_exists(array("teacher_id"), "POST") == true) {
                 echo('<tr>
                   <td>
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" name="students[]" value="'.$student['student_id'].'">
+                      <input class="form-check-input" type="checkbox" name="students[]" value="'._esc($student['student_id']).'">
                     </div>
                   </td>
-                  <td>'.$student['student_name'].'</a></td>
+                  <td>'._esc($student['student_name']).'</a></td>
                 </tr>');
             }
             echo('</tbody>

@@ -37,12 +37,12 @@ if (isset(isset(filter_input(INPUT_POST, "student_id", FILTER_DEFAULT)) && isset
         Structure::topHeading("Delete Student");
         echo('<hr>
         <div class="d-flex justify-content-center pb-4"> <img src="../src/img/delete.png" style="width: 15%;height: 15%;"></div>
-        <div class="d-flex justify-content-center">Are you sure you want to delete&nbsp;<b>'.$student["student_name"].'</b>?</div>
+        <div class="d-flex justify-content-center">Are you sure you want to delete&nbsp;<b>'._esc($student["student_name"]).'</b>?</div>
         <br>
         <div class="row justify-content-center">
         <form method="POST">
         <div class="">
-          <input type="hidden" name="student_id" value="'.$student["student_id"].'">
+          <input type="hidden" name="student_id" value="'._esc($student["student_id"]).'">
           <input type="hidden" name="delete_confirm" value="yes">
           <button type="submit" class="btn btn-danger btn-small">Yes</button>
           <a class="btn btn-success btn-small" href="'.Structure::nakedURL("view_students.php").'">No</a>

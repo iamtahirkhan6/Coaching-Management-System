@@ -60,10 +60,10 @@ class Structure
 
         echo('<!DOCTYPE html lang="en">
           <head>
-          <title>'.$title.'</title>
+          <title>'._esc($title).'</title>
 
           <!-- Bootstrap core CSS -->
-          <link href="'.$dot.'src/css/bootstrap.min.css" rel="stylesheet">
+          <link href="'._esc($dot).'src/css/bootstrap.min.css" rel="stylesheet">
           <meta name="theme-color" content="#563d7c">
 
           <style>
@@ -117,8 +117,7 @@ class Structure
 
     public static function currentURL()
     {
-        if (isset($_SERVER['HTTPS']) &&
-            $_SERVER['HTTPS'] === 'on') {
+        if (isset(filter_input(INPUT_SERVER, "HTTPS", FILTER_DEFAULT)) && filter_input(INPUT_SERVER, "HTTPS", FILTER_DEFAULT) === 'on') {
             $link = "https";
         } else {
             $link = "http";
@@ -144,7 +143,7 @@ class Structure
         echo('<main role="main" class="container mt-3">
             <h1 class="display-4 text">Error</h1>
             <hr>
-            <div class="alert alert-danger" role="alert">'.$error.'</div>
+            <div class="alert alert-danger" role="alert">'._esc($error).'</div>
             </main>');
         Structure::footer();
     }
@@ -152,18 +151,18 @@ class Structure
     public static function errorBox($title, $error)
     {
         echo('<main role="main" class="container mt-3">
-          <h1 class="display-4 text">'.$title.'</h1>
+          <h1 class="display-4 text">'._esc($title).'</h1>
           <hr>
-          <div class="alert alert-danger" role="alert">'.$error.'</div>
+          <div class="alert alert-danger" role="alert">'._esc($error).'</div>
         </main>');
     }
 
     public static function successBox($title, $message, $link="")
     {
         echo('<main role="main" class="container mt-3">
-          <h1 class="display-4 text">'.$title.'</h1>
+          <h1 class="display-4 text">'._esc($title).'</h1>
           <hr>
-          <div class="alert alert-success" role="alert">'.$message.'</div>
+          <div class="alert alert-success" role="alert">'._esc($message).'</div>
           <a class="btn btn-primary btn-small" href="'.$link.'" role="button">Go back!</a>
         </main>');
     }
@@ -173,10 +172,10 @@ class Structure
         $home = str_replace(basename(filter_input(INPUT_SERVER, "PHP_SELF", FILTER_SANITIZE_URL)), "", Structure::currentURL());
         echo('<div class="row">
         <div class="col col-sm-10">
-          <h1 class="">'.$heading.'</h1>
+          <h1 class="">'._esc($heading).'</h1>
         </div>
         <div class="col col-sm-1 pt-3">
-          <a href="'.$home.'" class="text-primary"><h6>Home</h6></a>
+          <a href="'._esc($home).'" class="text-primary"><h6>Home</h6></a>
         </div>
         <div class="col col-sm-1 pt-3">
           <a href="../logout.php" class="text-danger"><h6>Logout</h6></a>

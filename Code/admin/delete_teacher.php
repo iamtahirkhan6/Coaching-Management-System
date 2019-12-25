@@ -38,12 +38,12 @@ if (Structure::if_all_inputs_exists(array("teacher_id", "delete_confirm"), "POST
         Structure::topHeading("Delete Teacher");
         echo('<hr>
         <div class="d-flex justify-content-center pb-4"> <img src="../src/img/delete.png" style="width: 15%;height: 15%;"></div>
-        <div class="d-flex justify-content-center">Are you sure you want to delete&nbsp;<b>'.$teacher["teacher_name"].'</b>?</div>
+        <div class="d-flex justify-content-center">Are you sure you want to delete&nbsp;<b>'._esc($teacher["teacher_name"]).'</b>?</div>
         <br>
         <div class="row justify-content-center">
         <form method="POST">
           <div class="">
-              <input type="hidden" name="teacher_id" value="'.$teacher["teacher_id"].'">
+              <input type="hidden" name="teacher_id" value="'._esc($teacher["teacher_id"]).'">
               <input type="hidden" name="delete_confirm" value="yes">
               <button type="submit" class="btn btn-danger btn-small">Yes</button>
               <a class="btn btn-success btn-small" href="'.Structure::nakedURL("view_teachers.php").'">No</a>

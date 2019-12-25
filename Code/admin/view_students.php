@@ -44,17 +44,17 @@ foreach ($students as $student) {
     }
 
     echo('<tr>
-        <th scope="row">'.$counter.'</th>
-        <td>'.$student["student_name"].'</td>
-        <td>'.$student["email"].'</td>
-        <td>'.$student["student_phone_number"].'</td>
-        <td>'.$student["teacher_name"].'</td>
-        <td>'.$student["subjects"].'</td>
+        <th scope="row">'._esc($counter).'</th>
+        <td>'._esc($student["student_name"]).'</td>
+        <td>'._esc($student["email"]).'</td>
+        <td>'._esc($student["student_phone_number"]).'</td>
+        <td>'._esc($student["teacher_name"]).'</td>
+        <td>'._esc($student["subjects"]).'</td>
         <td>
         <div class="container">
             <div class="row">
-              <div class="col"><a href="update_student.php?student_id='.$student["student_id"].'" alt="Edit"><img src="../src/icons/edit-24px.svg" alt="Edit"></a></div>
-              <div class="col"><a href="delete_student.php?student_id='.$student["student_id"].'"  alt="Delete"><img src="../src/icons/delete-24px.svg" alt="Delete"></a></div>
+              <div class="col"><a href="update_student.php?student_id='._esc($student["student_id"]).'" alt="Edit"><img src="../src/icons/edit-24px.svg" alt="Edit"></a></div>
+              <div class="col"><a href="delete_student.php?student_id='._esc($student["student_id"]).'"  alt="Delete"><img src="../src/icons/delete-24px.svg" alt="Delete"></a></div>
             </div>
           </div>
         </td>
