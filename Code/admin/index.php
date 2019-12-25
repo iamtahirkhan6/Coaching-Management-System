@@ -1,74 +1,71 @@
 <?php
-// Start session
-session_start();
-
 // Import main class
-require_once "../classes/structure.class.php";
+require "../classes/structure.class.php";
 
-// Initialize HTML structure
-$struct = new Structure();
+// Start session
+Session::init();
 
 // Check if logged in otherwise redirect to login page
-$struct->checkLogin();
+Structure::checkLogin();
 
 // Load Header
-$struct->header("Admin Panel - Project");
+Structure::header("Admin Panel - Project");
 
 // Main Content Goes Here
-echo "<main role=\"main\" class=\"container mx-auto mt-3\">";
-$struct->topHeading("Admin Panel");
-echo "<hr>
-        <div class=\"row\">
-            <div class=\"col col-sm-12 col-md-12\">
-                <table class=\"table table-striped table-bordered table-hover\">
-                  <thead class=\"bg-warning text-white\">
+echo('<main role="main" class="container mx-auto mt-3">');
+Structure::topHeading("Admin Panel");
+echo('<hr>
+        <div class="row">
+            <div class="col col-sm-12 col-md-12">
+                <table class="table table-striped table-bordered table-hover">
+                  <thead class="bg-warning text-white">
                     <tr>
-                      <th scope=\"col\">Student</th>
+                      <th scope="col">Student</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td><a href=\"add_student.php\" class=\"text-secondary\">Add Student</a></td>
+                      <td><a href="add_student.php" class="text-secondary">Add Student</a></td>
                     </tr>
                     <tr>
-                      <td><a href=\"view_students.php\" class=\"text-secondary\">View Student</a></td>
+                      <td><a href="view_students.php" class="text-secondary">View Student</a></td>
                     </tr>
                     <tr>
-                      <td><a href=\"view_students.php\" class=\"text-secondary\">Update Student</a></td>
+                      <td><a href="view_students.php" class="text-secondary">Update Student</a></td>
                     </tr>
                     <tr>
-                      <td><a href=\"view_students.php\" class=\"text-secondary\">Delete Student</a></td>
+                      <td><a href="view_students.php" class="text-secondary">Delete Student</a></td>
                     </tr>
                   </tbody>
                 </table>
             </div>
 
-            <div class=\"col col-sm-12 col-md-12 col-md-offset-2 \">
-                <table class=\"table table-striped table-bordered table-hover\">
-                  <thead class=\"bg-info text-white\">
+            <div class="col col-sm-12 col-md-12 col-md-offset-2 ">
+                <table class="table table-striped table-bordered table-hover">
+                  <thead class="bg-info text-white">
                     <tr>
-                      <th scope=\"col\">Teacher</th>
+                      <th scope="col">Teacher</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td><a href=\"add_teacher.php\" class=\"text-secondary\">Add Teacher</a></td>
+                      <td><a href="add_teacher.php" class="text-secondary">Add Teacher</a></td>
                     </tr>
                     <tr>
-                      <td><a href=\"view_teachers.php\" class=\"text-secondary\">View Teacher</a></td>
+                      <td><a href="view_teachers.php" class="text-secondary">View Teacher</a></td>
                     </tr>
                     <tr>
-                      <td><a href=\"view_teachers.php\" class=\"text-secondary\">Update Teacher</a></td>
+                      <td><a href="view_teachers.php" class="text-secondary">Update Teacher</a></td>
                     </tr>
                     <tr>
-                      <td><a href=\"view_teachers.php\" class=\"text-secondary\">Delete Teacher</a></td>
+                      <td><a href="view_teachers.php" class="text-secondary">Delete Teacher</a></td>
                     </tr>
                   </tbody>
                 </table>
             </div>
 
           </div>
-        </main>";
+        </main>');
 
 // Display Footer
-$struct->footer();
+Structure::footer();
