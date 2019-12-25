@@ -20,3 +20,5 @@ c) Teachers can then login using password and email id that admin created for th
 d) Students can also login to the account created by the admin for him and he will then see the teacher that has been assigned to him.
 
 e) Add a field called subjects. Teachers can CRUD subjects as well and assign different subjects to the students assigned to him. So when the student logs in, he will be able to see the various subjects that the teacher will assign to him.
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7ad23e137c034319ab0195214f46e4a1)](https://www.codacy.com/manual/iamtahirkhan6/Coaching-Management-System-CRUD-PHP-MYSQL?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=iamtahirkhan6/Coaching-Management-System-CRUD-PHP-MYSQL&amp;utm_campaign=Badge_Grade)
