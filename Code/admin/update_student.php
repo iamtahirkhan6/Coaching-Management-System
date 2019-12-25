@@ -35,7 +35,7 @@ if (Structure::if_all_inputs_exists(array("student_id","student_name","student_p
     } else {
         // Form to fill details
         echo('<main role="main" class="container mt-3  mx-auto">');
-        echo Structure::topHeading("Update Student");
+        Structure::topHeading("Update Student");
         echo('<hr>
           <form method="POST">
             <input type="hidden" name="student_id" value="'.$student['student_id'].'">

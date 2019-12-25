@@ -62,4 +62,3 @@ Structure::footer();
 
 // delete object
 unset($admin);
-unset($struct);
