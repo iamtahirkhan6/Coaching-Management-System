@@ -165,13 +165,13 @@ class Admin extends Config
     }
 
     // DELETE teacher
-    public function delete_teacher($input)
+    public function delete_teacher($teacher_id)
     {
         $success = false; // variable to return if insertion success or failed
 
         // check if items to insert exists in the input array or note
-        if (isset($input["teacher_id"])) {
-            $insert = $this->db->query("DELETE FROM `teacher` WHERE `teacher_id`=?", $input["teacher_id"]);
+        if (isset($teacher_id)) {
+            $insert = $this->db->query("DELETE FROM `teacher` WHERE `teacher_id`=?", $teacher_id);
 
             // if more than 1 row returned then it insertion was successfull
             if ($insert->numRows() > 0) {
