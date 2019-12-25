@@ -17,7 +17,7 @@ if (isset($students_arr)) {
     if ($students_arr[0] == "EMPTY") {
         if (count($students_arr) > 0) {
             $teacher = new Teacher();
-            $teacher->assign_teacher($_POST["students"], $_GET["subject_id"]);
+            $teacher->assign_teacher(filter_input(INPUT_POST, "students", FILTER_DEFAULT, FILTER_REQUIRE_ARRAY), filter_input(INPUT_POST, "subject_id", FILTER_DEFAULT));
             Structure::successBox("Assign Students", "Succesfully assigned the following student(s) to ".filter_input(INPUT_GET, "subject_name", FILTER_DEFAULT)."!<br>", "view_subjects.php");
             unset($teacher);
         } else {

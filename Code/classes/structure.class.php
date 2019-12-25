@@ -95,21 +95,21 @@ class Structure
 
     public static function nakedURL($extra = "")
     {
-        $host  = $_SERVER['HTTP_HOST'];
+        $host  = filter_input(INPUT_SERVER, "HTTP_HOST", FILTER_DEFAULT);
         $uri   = rtrim(dirname(filter_input(INPUT_SERVER, "PHP_SELF", FILTER_SANITIZE_URL)), '/\\');
         return "http://$host$uri/$extra";
     }
 
     public static function redirect($extra = "")
     {
-        $host  = $_SERVER['HTTP_HOST'];
+        $host  = filter_input(INPUT_SERVER, "HTTP_HOST", FILTER_DEFAULT);
         $uri   = rtrim(dirname(filter_input(INPUT_SERVER, "PHP_SELF", FILTER_SANITIZE_URL)), '/\\');
         header("Location: http://$host$uri/$extra");
     }
 
     public static function redirectHome()
     {
-        $host  = $_SERVER['HTTP_HOST'];
+        $host  = filter_input(INPUT_SERVER, "HTTP_HOST", FILTER_DEFAULT);
         $uri   = rtrim(dirname(filter_input(INPUT_SERVER, "PHP_SELF", FILTER_SANITIZE_URL)), '/\\');
 
         header("Location: http://$host".str_replace(array( "admin", "student", "teacher" ), "", $uri));

@@ -17,7 +17,13 @@ Structure::header("Update Student - Admin");
 if (Structure::if_all_inputs_exists(array("student_id","student_name","student_phone_number","email","password"), "POST") == true) {
     $admin = new Admin();
 
-    if (is_bool($admin->update_student($_POST)) === true) {
+    if (is_bool($admin->update_student(
+        filer_input(INPUT_POST, "student_id", FILTER_DEFAULT),
+        filer_input(INPUT_POST, "student_name", FILTER_DEFAULT),
+        filer_input(INPUT_POST, "student_phone_number", FILTER_DEFAULT),
+        filer_input(INPUT_POST, "email", FILTER_DEFAULT),
+        filer_input(INPUT_POST, "password", FILTER_DEFAULT)
+    )) === true) {
         // On success
         Structure::successBox("Update Student", "Successfully updated student!", Structure::nakedURL("view_students.php"));
     } else {
@@ -26,9 +32,9 @@ if (Structure::if_all_inputs_exists(array("student_id","student_name","student_p
     }
 
     //$admin->close_DB();
-} elseif (isset($_GET["student_id"]) && !empty($_GET["student_id"])) {
+} elseif (isset(filer_input(INPUT_GET, "student_id", FILTER_DEFAULT)) && !empty(filer_input(INPUT_GET, "student_id", FILTER_DEFAULT))) {
     $admin    = new Admin();
-    $student = $admin->view_student($_GET["student_id"], true);
+    $student = $admin->view_student(filer_input(INPUT_GET, "student_id", FILTER_DEFAULT), true);
 
     if (!isset($student["student_id"])) {
         Structure::errorBox("Update Student", "Select a valid student!");
