@@ -226,3 +226,8 @@ class Structure
         return filter_input($input_type, $key, FILTER_DEFAULT);
     }
 }
+
+function _esc($string)
+{
+    echo htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
+}

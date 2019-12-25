@@ -38,22 +38,22 @@ if (Structure::if_all_inputs_exists(array("student_id","student_name","student_p
         Structure::topHeading("Update Student");
         echo('<hr>
           <form method="POST">
-            <input type="hidden" name="student_id" value="'.$student['student_id'].'">
+            <input type="hidden" name="student_id" value="'._esc($student['student_id']).'">
             <div class="form-group">
               <label for="name">Name</label>
-              <input type="text" name="student_name" class="form-control" id="student_name" aria-describedby="student_name" value="'.$student["student_name"].'">
+              <input type="text" name="student_name" class="form-control" id="student_name" aria-describedby="student_name" value="'._esc($student["student_name"]).'">
             </div>
             <div class="form-group">
               <label for="student_phone_number">Phone Number</label>
-              <input type="number" name="student_phone_number" class="form-control" id="student_phone_number" aria-describedby="student_phone_number" value="'.$student["student_phone_number"].'">
+              <input type="number" name="student_phone_number" class="form-control" id="student_phone_number" aria-describedby="student_phone_number" value="'._esc($student["student_phone_number"]).'">
             </div>
             <div class="form-group">
               <label for="email">Email address</label>
-              <input type="email" name="email" class="form-control" id="email" aria-describedby="email" value="'.$student["email"].'">
+              <input type="email" name="email" class="form-control" id="email" aria-describedby="email" value="'._esc($student["email"]).'">
             </div>
             <div class="form-group">
               <label for="password">Password</label>
-              <input type="password" name="password" id="password" class="form-control" id="password" value="'.$student["password"].'">
+              <input type="password" name="password" id="password" class="form-control" id="password" value="'._esc($student["password"]).'">
             </div>
 
             <div class="row">
