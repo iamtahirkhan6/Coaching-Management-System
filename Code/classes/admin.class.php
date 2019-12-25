@@ -149,13 +149,13 @@ class Admin extends Config
     }
 
     // UPDATE teacher
-    public function update_teacher($input)
+    public function update_teacher($teacher_id, $teacher_name, $teacher_phone_number, $email, $password)
     {
         $success = false; // variable to return if insertion success or failed
 
         // check if items to insert exists in the input array or note
-        if (isset($input["teacher_id"]) && isset($input["teacher_name"]) && isset($input["teacher_phone_number"]) && isset($input["email"]) && isset($input["password"])) {
-            $insert = $this->db->query("UPDATE `teacher` SET `teacher_name`=?, `teacher_phone_number`=?, `email`=?, `password`=? WHERE `teacher_id`=?", $input["teacher_name"], $input["teacher_phone_number"], $input["email"], $input["password"], $input["teacher_id"]);
+        if (isset($teacher_id) && isset($teacher_name) && isset($teacher_phone_number) && isset($email) && isset($password)) {
+            $insert = $this->db->query("UPDATE `teacher` SET `teacher_name`=?, `teacher_phone_number`=?, `email`=?, `password`=? WHERE `teacher_id`=?", $teacher_name, $teacher_phone_number, $email, $password, $teacher_id);
 
             // if more than 1 row returned then it insertion was successfull
             return ($insert->affectedRows() > 0);
