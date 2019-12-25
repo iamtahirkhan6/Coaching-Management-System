@@ -5,11 +5,11 @@ class Admin extends Config
 {
     //////////////// STUDENT CRUD (creat, read, update, delete) ///////////////
     // CREATE a new student
-    public function create_student(array $input)
+    public function create_student($student_name, $student_phone_number, $email, $password)
     {
         // check if items to insert exists in the input array or note
-        if (isset($input["student_name"]) && isset($input["student_phone_number"]) && isset($input["email"]) && isset($input["password"]) && strlen($input["password"]) > 5) {
-            $insert = $this->db->query("INSERT INTO `student`(`student_name`, `student_phone_number`, `email`, `password`) VALUES (?, ?, ?, ?)", $input["student_name"], $input["student_phone_number"], $input["email"], $input["password"]);
+        if (isset($student_name) && isset($student_phone_number) && isset($email) && isset($password) && strlen($password) > 5) {
+            $insert = $this->db->query("INSERT INTO `student`(`student_name`, `student_phone_number`, `email`, `password`) VALUES (?, ?, ?, ?)", $student_name, $$student_phone_number, $email, $password);
 
             // if more than 1 row returned then it insertion was successfull
             if ($insert->affectedRows() > 0) {

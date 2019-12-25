@@ -16,7 +16,12 @@ Structure::header("Add Student - Admin");
 // Check if form submitted
 if (Structure::if_all_inputs_exists(array("student_name", "student_phone_number", "email", "password"), "POST") == true) {
     $admin = new Admin();
-    if (is_bool($admin->create_student($_POST)) === true) {
+    if (is_bool($admin->create_student(
+        filter_input(INPUT_POST, "student_name", FILTER_DEFAULT),
+        filter_input(INPUT_POST, "student_phone_number", FILTER_DEFAULT),
+        filter_input(INPUT_POST, "email", FILTER_DEFAULT),
+        filter_input(INPUT_POST, "password", FILTER_DEFAULT),
+    )) === true) {
         // On success
         Structure::successBox("Add Student", "Successfully added student!", Structure::nakedURL("view_students.php"));
     } else {
