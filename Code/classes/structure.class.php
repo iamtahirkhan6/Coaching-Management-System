@@ -59,33 +59,33 @@ class Structure
         }
 
         echo('<!DOCTYPE html lang="en">
-          <head>
-          <title>'._esc($title).'</title>
+        <head>
+        <title>'.$title.'</title>
 
-          <!-- Bootstrap core CSS -->
-          <link href="'._esc($dot).'src/css/bootstrap.min.css" rel="stylesheet">
-          <meta name="theme-color" content="#563d7c">
+        <!-- Bootstrap core CSS -->
+        <link href="'.$dot.'src/css/bootstrap.min.css" rel="stylesheet">
+        <meta name="theme-color" content="#563d7c">
 
-          <style>
-          .bd-placeholder-img {
-          font-size: 1.125rem;
-          text-anchor: middle;
-          -webkit-user-select: none;
-          -moz-user-select: none;
-          -ms-user-select: none;
-          user-select: none;
-          }
+        <style>
+        .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        }
 
-          @media (min-width: 768px) {
-          .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-          }
-          }
-          </style>
-          <!-- Custom styles for this template -->
-          <link href="src/css/signin.css" rel="stylesheet">
-          </head>
-          <body>');
+        @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+        }
+        }
+        </style>
+        <!-- Custom styles for this template -->
+        <link href="src/css/signin.css" rel="stylesheet">
+        </head>
+        <body>');
     }
 
     public static function footer()
@@ -117,7 +117,7 @@ class Structure
 
     public static function currentURL()
     {
-        if (isset(filter_input(INPUT_SERVER, "HTTPS", FILTER_DEFAULT)) && filter_input(INPUT_SERVER, "HTTPS", FILTER_DEFAULT) === 'on') {
+        if (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] === 'on') {
             $link = "https";
         } else {
             $link = "http";
@@ -151,18 +151,18 @@ class Structure
     public static function errorBox($title, $error)
     {
         echo('<main role="main" class="container mt-3">
-          <h1 class="display-4 text">'._esc($title).'</h1>
+          <h1 class="display-4 text">'.$title.'</h1>
           <hr>
-          <div class="alert alert-danger" role="alert">'._esc($error).'</div>
+          <div class="alert alert-danger" role="alert">'.$error.'</div>
         </main>');
     }
 
     public static function successBox($title, $message, $link="")
     {
         echo('<main role="main" class="container mt-3">
-          <h1 class="display-4 text">'._esc($title).'</h1>
+          <h1 class="display-4 text">'.$title.'</h1>
           <hr>
-          <div class="alert alert-success" role="alert">'._esc($message).'</div>
+          <div class="alert alert-success" role="alert">'.$message.'</div>
           <a class="btn btn-primary btn-small" href="'.$link.'" role="button">Go back!</a>
         </main>');
     }
@@ -172,10 +172,10 @@ class Structure
         $home = str_replace(basename(filter_input(INPUT_SERVER, "PHP_SELF", FILTER_SANITIZE_URL)), "", Structure::currentURL());
         echo('<div class="row">
         <div class="col col-sm-10">
-          <h1 class="">'._esc($heading).'</h1>
+          <h1 class="">'.$heading.'</h1>
         </div>
         <div class="col col-sm-1 pt-3">
-          <a href="'._esc($home).'" class="text-primary"><h6>Home</h6></a>
+          <a href="'.$home.'" class="text-primary"><h6>Home</h6></a>
         </div>
         <div class="col col-sm-1 pt-3">
           <a href="../logout.php" class="text-danger"><h6>Logout</h6></a>
